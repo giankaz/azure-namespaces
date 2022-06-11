@@ -5,7 +5,8 @@ export const StyledLi = styled.li`
     height: 70px;
     padding: 20px;
 
-
+    background: 'linear-gradient(to left bottom, #1e1e1e, #262627, #2e2e2f, #363639, #3e3e42) no-repeat center center fixed';
+    
 
     display: flex;
     justify-content: space-between;

@@ -11,8 +11,9 @@ export const StyledInput = styled.input`
         color: var(--white);
     }
 `
-
 export const StyledDiv = styled.div`
+    width: 94.5%;
+    height: 56px;
     border: 1px solid var(--blue);
     border-radius: 6px;
     padding: 10px;
@@ -22,7 +23,6 @@ export const StyledDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 95.5%;
     
     cursor: pointer;
 
@@ -83,4 +83,13 @@ cursor: pointer;
 &:hover {
     color: red;
 }
+`
+
+export const StyledForm = styled.form`
+width: 97%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 15px;
 `

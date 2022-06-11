@@ -11,7 +11,7 @@ export default function Aside({
 	return (
 		<StyledAside mobile={forceAside ? true : false}>
 			<div>
-				<h2>Azure Namespaces</h2>
+				<h2>Namespaces</h2>
 				{forceAside && <button onClick={() => setForceAside(false)}>x</button>}
 			</div>
 			<FilterList

@@ -24,7 +24,7 @@ export default function SearchBox() {
 	}, []);
 
 	return (
-		<Stack spacing={2} sx={{minWidth: '300px', width: "50%", color: "var(--white)", marginTop: '70px', marginBottom: '30px' }}>
+		<Stack spacing={2} sx={{minWidth: '300px', width: "50%", color: "var(--white)", marginTop: '70px', marginBottom: '30px', zIndex: '1'}}>
 			<Autocomplete
 				freeSolo
 				id="free-solo-2-demo"
@@ -47,7 +47,7 @@ export default function SearchBox() {
                             "&:focus": {
 								border: "none"
 							},
-                         
+							background: 'linear-gradient(to left bottom, #1e1e1e, #262627, #2e2e2f, #363639, #3e3e42) no-repeat center center fixed'
 						}}
 						label="Search for Asset Type"
 						InputProps={{

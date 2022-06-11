@@ -1,19 +1,31 @@
+import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { BiCopyAlt } from "react-icons/bi";
 import { useModal } from "../../contexts/Modal";
+import mountName from "../../functions/mountName";
 import ButtonMUI from "../Button";
+import SelectRegion from "../RegionSearcher";
+import SelectMUI from "../Select";
 import InputMUI from "../Textfield";
-import { StyledCloseButton, StyledDiv, StyledInput } from "./styles";
-import { useSnackbar } from "notistack";
+import {
+	StyledCloseButton,
+	StyledDiv,
+	StyledForm,
+	StyledInput,
+} from "./styles";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const style = {
 	position: "absolute",
 	top: "50%",
 	left: "50%",
 	transform: "translate(-50%, -50%)",
-
+	boxSizing: "border-box",
 	bgcolor: "var(--grey)",
 	border: "2px solid #000",
 	boxShadow: 24,
@@ -23,7 +35,7 @@ const style = {
 	alignItems: "center",
 	justifyContent: "center",
 	borderRadius: "8px",
-	gap: "10px",
+	gap: "15px",
 };
 
 export default function GeneratorModal() {
@@ -33,10 +45,15 @@ export default function GeneratorModal() {
 
 	const [name, setName] = useState("");
 
+	const [enviroment, setEnviroment] = useState("");
+
+	const [region, setRegion] = useState("");
+
+	const [instance, setInstance] = useState("");
+
 	const { enqueueSnackbar } = useSnackbar();
 
 	function copyToClipboard() {
-		
 		if (generatedName !== "Generated Namespace") {
 			navigator.clipboard.writeText(generatedName);
 
@@ -60,36 +77,25 @@ export default function GeneratorModal() {
 		}
 	}
 
-	function mountName() {
-		if (modalData.abbreviation && name) {
-			const newGeneratedName = modalData.nohyphen
-				? `${modalData.abbreviation.toLowerCase()}<${name.toLowerCase()}>${"test"}`
-				: `${modalData.abbreviation.toLowerCase()}-<${name.toLowerCase()}>-<${"test"}>`;
-			setGeneratedName(newGeneratedName);
-			enqueueSnackbar(
-				`Name ${newGeneratedName} was generated, click on it to copy.`,
-				{
-					variant: "success",
-					anchorOrigin: {
-						vertical: "bottom",
-						horizontal: "center",
-					},
-				}
-			);
-		} else {
-			enqueueSnackbar("Name was not generated. Missing data.", {
-				variant: "error",
-				anchorOrigin: {
-					vertical: "bottom",
-					horizontal: "center",
-				},
-			});
-		}
-	}
+	const schema = yup.object().shape({});
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		resolver: yupResolver(schema),
+	});
+
+	const submit = (data) => {
+		console.log(data);
+	};
 
 	useEffect(() => {
 		setGeneratedName("Generated Namespace");
 		setName("");
+		setEnviroment("");
+		setInstance("");
 	}, [isOpen]);
 
 	return (
@@ -102,27 +108,48 @@ export default function GeneratorModal() {
 				aria-describedby="keep-mounted-modal-description"
 			>
 				<Box sx={style}>
-				<StyledCloseButton onClick={closeModal}>x</StyledCloseButton>
+					<StyledCloseButton onClick={closeModal}>x</StyledCloseButton>
+					<Typography
+						sx={{
+							color: "white",
+							fontSize: "20px",
+							maxWidth: "100%",
+							marginBottom: "15px",
+						}}
+					>
+						{modalData.assetType}
+					</Typography>
 					<InputMUI
-						readOnly={true}
-						shrink={false}
-						labelText={modalData.assetType}
-						min={modalData.charLength ? modalData.charLength.min : undefined}
-						max={modalData.charLength ? modalData.charLength.max : undefined}
-					/>
-					<InputMUI
-						labelText={modalData.abbreviation}
-						shrink={false}
-						min={modalData.charLength ? modalData.charLength.min : undefined}
-						max={modalData.charLength ? modalData.charLength.max : undefined}
-					/>
-					<InputMUI
+						required
 						labelText="Type your app or service name"
 						onChange={(e) => setName(e.target.value)}
 						value={name}
-						shrink
 						min={modalData.charLength ? modalData.charLength.min : undefined}
 						max={modalData.charLength ? modalData.charLength.max : undefined}
+					/>
+					<SelectMUI
+						selectValue={enviroment}
+						selectChangeFunction={setEnviroment}
+						options={["dev", "prod", "qa", "stag"]}
+						selectInfo="Select the enviroment"
+					/>
+					<SelectRegion region={region} setRegion={setRegion} />
+					<SelectMUI
+						selectValue={instance}
+						selectChangeFunction={setInstance}
+						options={[
+							"001",
+							"002",
+							"003",
+							"004",
+							"005",
+							"006",
+							"007",
+							"008",
+							"009",
+							"010",
+						]}
+						selectInfo="Select your instance"
 					/>
 					<StyledDiv onClick={copyToClipboard}>
 						<StyledInput
@@ -134,7 +161,21 @@ export default function GeneratorModal() {
 						<BiCopyAlt size={30} className="copybtn" />
 						<p className="tooltiptext">Copy to clipboard</p>
 					</StyledDiv>
-					<ButtonMUI onClick={mountName}>Generate Azure Namespace</ButtonMUI>
+					<ButtonMUI
+						onClick={() =>
+							mountName(
+								modalData,
+								name,
+								region,
+								enviroment,
+								instance,
+								setGeneratedName,
+								enqueueSnackbar
+							)
+						}
+					>
+						Generate Azure Namespace
+					</ButtonMUI>
 				</Box>
 			</Modal>
 		</div>

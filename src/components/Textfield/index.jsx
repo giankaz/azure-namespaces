@@ -13,7 +13,6 @@ export default function InputMUI({
 }) {
 	return (
 		<Box
-			component="form"
 			sx={{
 				"& .MuiTextField-root": {
 					m: 1,
@@ -22,8 +21,7 @@ export default function InputMUI({
 					borderRadius: "5px",
 				},
 			}}
-			noValidate
-			autoComplete="off"
+	
 		>
 			<TextField
 				id="outlined-required"
@@ -36,11 +34,12 @@ export default function InputMUI({
 					shrink: shrink
 				}}
 				InputProps={{
+					autoComplete: "off",
 					onChange: onChange,
 					value: value,
 					type: "search",
 					style: {
-						width: "100%",
+						width: "300px",
 						borderRadius: "none",
 						"&:hover": {
 							border: "none",

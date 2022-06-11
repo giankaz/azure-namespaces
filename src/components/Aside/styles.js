@@ -5,7 +5,7 @@ export const StyledAside = styled.aside`
     height: 100vh;
  
     position: relative;
-    
+    z-index: 3;
   
     background-color: var(--black);
     border-right: 2px solid var(--white);

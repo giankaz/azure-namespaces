@@ -10,7 +10,7 @@ export const StyledMain = styled.main`
         position: absolute;
         left: 10px;
         top: 10px;
-        z-index: 0;
+        z-index: 2;
         cursor: pointer;
 
         &:hover {
