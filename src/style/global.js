@@ -4,16 +4,20 @@ export default createGlobalStyle`
 html, body, .App {
     
     font-family: 'Rubik', sans-serif;
-    background-image: linear-gradient(to left bottom, #1e1e1e, #262627, #2e2e2f, #363639, #3e3e42);
-
+    background: linear-gradient(to left bottom, #1e1e1e, #262627, #2e2e2f, #363639, #3e3e42) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .App {
 
   display: flex;
   flex-flow: column nowrap;
-  height: 100vh;
+ 
   justify-content: space-between;
+  color: var(--white);
 
 }
 
@@ -26,7 +30,7 @@ button {
 
 
 :root {
-
+    --white  :   white;
     --blue   : #007acc;
     --grey   : #3e3e42;
     --grey50 : #2d2d30;
@@ -41,20 +45,20 @@ button {
 
 * {
     scrollbar-width: auto;
-    scrollbar-color: var(--brown) #ffffff;
+    scrollbar-color: transparent var(--grey);
   }
 
  
   *::-webkit-scrollbar {
-    width: 7px;
+    width: 5px;
   }
 
   *::-webkit-scrollbar-track {
-    background: white;
+    background: var(--grey);
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: var(--brown);
+    background-color: transparent;
     border-radius: 10px;
     border: 0 solid #ffffff;
   }

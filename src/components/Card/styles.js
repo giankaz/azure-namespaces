@@ -5,9 +5,13 @@ export const StyledLi = styled.li`
     height: 70px;
     padding: 20px;
 
+
+
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
+    transition: 0.5s;
 
     border: 1px solid var(--grey);
     border-radius: 8px;
@@ -18,7 +22,9 @@ export const StyledLi = styled.li`
 
 
     &:hover {
-        border: 1px solid white;
+
+        border: 1px solid var(--blue);
         cursor: pointer;
+        
     }
 `
