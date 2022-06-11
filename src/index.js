@@ -4,14 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Providers from './contexts';
+import { SnackbarProvider } from 'notistack';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Providers>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Providers>
+  <SnackbarProvider maxSnack={1}>
+    <Providers>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Providers>
+  </SnackbarProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

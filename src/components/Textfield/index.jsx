@@ -2,7 +2,15 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
-export default function InputMUI({ labelText, min = 1, max = 32 }) {
+export default function InputMUI({
+	labelText,
+	min = 1,
+	max = 32,
+	onChange,
+	value,
+	readOnly,
+	shrink
+}) {
 	return (
 		<Box
 			component="form"
@@ -18,7 +26,6 @@ export default function InputMUI({ labelText, min = 1, max = 32 }) {
 			autoComplete="off"
 		>
 			<TextField
-				required
 				id="outlined-required"
 				label={labelText}
 				InputLabelProps={{
@@ -26,9 +33,11 @@ export default function InputMUI({ labelText, min = 1, max = 32 }) {
 						color: "var(--white)",
 						backgroundColor: "var(--grey)",
 					},
+					shrink: shrink
 				}}
 				InputProps={{
-	
+					onChange: onChange,
+					value: value,
 					type: "search",
 					style: {
 						width: "100%",
@@ -42,10 +51,11 @@ export default function InputMUI({ labelText, min = 1, max = 32 }) {
 						color: "var(--white)",
 					},
 				}}
-        inputProps={{
-          maxLength: max,
-          minLength: min
-        }}
+				inputProps={{
+					readOnly: readOnly,
+					maxLength: max,
+					minLength: min,
+				}}
 			/>
 		</Box>
 	);
