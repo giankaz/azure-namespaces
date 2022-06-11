@@ -9,9 +9,8 @@ export default function CardList({ type }) {
 			{type.map((card, index) => (
 				<Card
 					key={index}
-		
-					assetType={card.assetType}
-					abbreviation={card.abbreviation}
+					card={card}
+				
 				/>
 			))}
 		</StyledUl>

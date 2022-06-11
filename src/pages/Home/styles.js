@@ -2,11 +2,21 @@ import styled from "styled-components";
 
 export const StyledMain = styled.main`
     width: 100%;
-    height: 100%;
+    height: 100vh;
     
     display: flex;
 
+    .menu_hamburguer {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        z-index: 0;
+        cursor: pointer;
 
+        &:hover {
+            color: var(--blue);
+        }
+    }
 
     section {
     

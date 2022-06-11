@@ -25,6 +25,7 @@ export const StyledLi = styled.li`
 
         border: 1px solid var(--blue);
         cursor: pointer;
+        color: var(--blue)
         
     }
 `

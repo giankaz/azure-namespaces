@@ -24,7 +24,7 @@ export default function SearchBox() {
 	}, []);
 
 	return (
-		<Stack spacing={2} sx={{ width: "50%", color: "var(--white)", marginTop: '50px', marginBottom: '30px' }}>
+		<Stack spacing={2} sx={{minWidth: '300px', width: "50%", color: "var(--white)", marginTop: '70px', marginBottom: '30px' }}>
 			<Autocomplete
 				freeSolo
 				id="free-solo-2-demo"

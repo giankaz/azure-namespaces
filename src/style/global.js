@@ -45,7 +45,7 @@ button {
 
 * {
     scrollbar-width: auto;
-    scrollbar-color: transparent var(--grey);
+    scrollbar-color: var(--blue);
   }
 
  
@@ -54,13 +54,13 @@ button {
   }
 
   *::-webkit-scrollbar-track {
-    background: var(--grey);
+    background: transparent;
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: transparent;
+    background-color: var(--blue);
     border-radius: 10px;
-    border: 0 solid #ffffff;
+    border: 0 solid var(--blue);
   }
 
 

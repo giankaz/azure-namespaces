@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import Aside from "../../components/Aside";
 import CardList from "../../components/CardList";
@@ -6,7 +7,7 @@ import SearchBox from "../../components/Search";
 import { useFilter } from "../../contexts/Filter";
 import database from "../../db";
 import { StyledMain } from "./styles";
-
+import {GiHamburgerMenu} from 'react-icons/gi'
 export default function Home() {
 	const [
 		{
@@ -32,7 +33,10 @@ export default function Home() {
 
 
 	const [filteredData, setFilteredData] = useState([]);
-  console.log(`🤖 ~ Home ~ filteredData`, filteredData )
+
+  const [forceAside, setForceAside] = useState(false)
+
+  const mobile = useMediaQuery('(max-width: 750px)')
 
 
 
@@ -58,7 +62,14 @@ export default function Home() {
 
 	return (
 		<StyledMain>
-			<Aside setFilteredData={setFilteredData} filteredData={filteredData}/>
+			{!mobile ? <Aside setFilteredData={setFilteredData} filteredData={filteredData} />
+      :
+      <div className="menu_hamburguer" onClick={() => setForceAside(true)}>
+
+        <GiHamburgerMenu size={50} />
+      </div>
+      }
+      {forceAside && <Aside setFilteredData={setFilteredData} filteredData={filteredData} mobile={forceAside && true} forceAside={forceAside} setForceAside={setForceAside}/>}
 			<section>
         <SearchBox/>
         {filteredData.length > 0 ? 

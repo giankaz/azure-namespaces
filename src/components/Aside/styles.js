@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
 export const StyledAside = styled.aside`
-    min-width: 300px;
+    min-width: ${props => props.mobile ? '100%' : '300px'};
     height: 100vh;
  
+    position: relative;
+    
   
     background-color: var(--black);
     border-right: 2px solid var(--white);
@@ -11,6 +13,20 @@ export const StyledAside = styled.aside`
     display: flex;
     flex-direction: column;
     gap: 30px;
+
+    div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    button {
+        border: none;
+        background-color: transparent;
+        color: var(--blue);
+        font-size: 35px;
+        font-weight: bold;
+    }
 
     h2 {
         padding-left: 20px;
@@ -21,7 +37,6 @@ export const StyledAside = styled.aside`
         align-self: flex-start;
         font-size: 24px;
         font-weight: bold;
-        text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
     }
 
 `

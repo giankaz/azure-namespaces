@@ -6,8 +6,17 @@ export function ModalProvider ({children}) {
     const [isOpen, setIsOpen] = useState(false)
     const [modalData, setModalData] = useState({})
 
+    function openModal () {
+        setIsOpen(true)
+    }
+
+    function closeModal () {
+        setIsOpen(false)
+        setModalData({})
+    }
+
     return (
-        <ModalContext.Provider value={{isOpen, setIsOpen, modalData, setModalData}}>
+        <ModalContext.Provider value={{isOpen, openModal, closeModal, modalData, setModalData}}>
             {children}
         </ModalContext.Provider>
     )
