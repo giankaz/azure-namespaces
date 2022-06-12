@@ -1,13 +1,27 @@
+
+import { makeStyles } from "@material-ui/styles";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { useEffect } from "react";
 import regions from "../../regions";
 
+const useStyles = makeStyles({
+    paper: {
+      backgroundColor: 'var(--grey)',
+      color: 'var(--white)'
+    }
+  });
 
 
 export default function SelectRegion({region, setRegion}) {
+    const classes = useStyles()
 
+    useEffect(() => {
+       if (region === '') {
+
+       }
+    }, [region])
 
 
 	return (
@@ -15,24 +29,35 @@ export default function SelectRegion({region, setRegion}) {
 			<Autocomplete
 				freeSolo
 				id="free-solo-2-demo"
-				disableClearable
 				options={regions.map((option) => option.region)}
+                classes={{ paper: classes.paper }}
                 onChange={(e, value) => {
-                   const selectedRegion = regions.find((item) => item.region.toLowerCase() === value.toLowerCase())
-                    setRegion(selectedRegion.abbreviation)
+                    console.log(e.target.innerText)
+                    if (value) {
+                        const selectedRegion = regions.find((item) => item.region.toLowerCase() === value.toLowerCase())
+                        setRegion(selectedRegion.abbreviation)
+                    } 
+
+
                 }}
-				renderInput={(params) => (
-                  
+                
+				renderInput={(rest) => (
+                
 					<TextField       
+                      {...rest}
+                     
                         onChange={(e) =>  {
+                            const res = {...rest}
+                            console.log(`🤖 ~ SelectRegion ~ ref`, res.inputProps.ref.current.value)
+                            
                             const selectedRegion = regions.find((item) => item.region.toLowerCase() === e.target.value.toLowerCase())
                             if (selectedRegion ) {
                                 setRegion(selectedRegion.abbreviation)
 
                             }
                          }}
-                        value={region}
-						{...params}
+                        
+                      
 						sx={{
 							label: { color: "var(--white)", backgroundColor: 'var(--grey)',borderRadius: '10px' },
 							border: "none",
@@ -46,13 +71,14 @@ export default function SelectRegion({region, setRegion}) {
 						}}
 						label="Type or select Azure region"
                         InputLabelProps={{
+                       
                             style: {
                                 color: 'var(--white)',
                             }
                         }}
 						InputProps={{
+							...rest.InputProps,
                             width: '100%',
-							...params.InputProps,
 							type: "search",
                             style: {
 							border: '1px solid var(--blue)',
@@ -69,6 +95,7 @@ export default function SelectRegion({region, setRegion}) {
                         
                          }
 						}}
+                 
 					/>
                 
                     )}

@@ -1,9 +1,12 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { BiCopyAlt } from "react-icons/bi";
+import * as yup from "yup";
 import { useModal } from "../../contexts/Modal";
 import mountName from "../../functions/mountName";
 import ButtonMUI from "../Button";
@@ -12,13 +15,8 @@ import SelectMUI from "../Select";
 import InputMUI from "../Textfield";
 import {
 	StyledCloseButton,
-	StyledDiv,
-	StyledForm,
-	StyledInput,
+	StyledDiv, StyledInput
 } from "./styles";
-import * as yup from "yup";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 const style = {
 	position: "absolute",
@@ -37,6 +35,7 @@ const style = {
 	borderRadius: "8px",
 	gap: "15px",
 };
+export const noInstance = ['st', 'stdiag']
 
 export default function GeneratorModal() {
 	const { isOpen, openModal, closeModal, modalData } = useModal();
@@ -48,10 +47,18 @@ export default function GeneratorModal() {
 	const [enviroment, setEnviroment] = useState("");
 
 	const [region, setRegion] = useState("");
+    console.log(`🤖 ~ GeneratorModal ~ region`, region)
 
 	const [instance, setInstance] = useState("");
 
+	const [reset, setReset] = useState(false)
+
+	const [showInstance, setShowInstance] = useState(true)
+
+	
+
 	const { enqueueSnackbar } = useSnackbar();
+
 
 	function copyToClipboard() {
 		if (generatedName !== "Generated Namespace") {
@@ -92,11 +99,26 @@ export default function GeneratorModal() {
 	};
 
 	useEffect(() => {
+		setRegion("")
 		setGeneratedName("Generated Namespace");
 		setName("");
 		setEnviroment("");
 		setInstance("");
+		setReset(true)
+		const checkInstaceIsNeeded = noInstance.find((item) => item === modalData.abbreviation)
+        
+		if (checkInstaceIsNeeded) {
+			setShowInstance(false)
+		}
+	
+		return () => {
+			setReset(false)
+			setShowInstance(true)
+		}
+	
 	}, [isOpen]);
+
+
 
 	return (
 		<div>
@@ -133,24 +155,25 @@ export default function GeneratorModal() {
 						options={["dev", "prod", "qa", "stag"]}
 						selectInfo="Select the enviroment"
 					/>
-					<SelectRegion region={region} setRegion={setRegion} />
+					{reset && <SelectRegion region={region} setRegion={setRegion} />}
+					{showInstance && 
 					<SelectMUI
-						selectValue={instance}
-						selectChangeFunction={setInstance}
-						options={[
-							"001",
-							"002",
-							"003",
-							"004",
-							"005",
-							"006",
-							"007",
-							"008",
-							"009",
-							"010",
-						]}
-						selectInfo="Select your instance"
-					/>
+					selectValue={instance}
+					selectChangeFunction={setInstance}
+					options={[
+						"001",
+						"002",
+						"003",
+						"004",
+						"005",
+						"006",
+						"007",
+						"008",
+						"009",
+						"010"
+					]}
+					selectInfo="Select your instance"
+				/>}
 					<StyledDiv onClick={copyToClipboard}>
 						<StyledInput
 							readOnly

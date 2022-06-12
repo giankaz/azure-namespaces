@@ -9,7 +9,7 @@ export const StyledLi = styled.li`
    text-align: start;
 
    color: ${props => props.color};
-   border-bottom: 2px solid ${props => props.color};
+   border-bottom: 2px solid ${props => props.color ? props.color : 'var(--grey)'};
    transition: 0.5s;
 
 

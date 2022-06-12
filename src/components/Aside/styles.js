@@ -8,7 +8,7 @@ export const StyledAside = styled.aside`
     z-index: 3;
   
     background-color: var(--black);
-    border-right: 2px solid var(--white);
+    border-right: 2px solid var(--grey);
 
     display: flex;
     flex-direction: column;

@@ -94,8 +94,8 @@ const database = {
         { assetType: "SQL Managed Instance", abbreviation: "sqlmi" }
     ],
     storage: [
-        { assetType: "Storage account (general use)", abbreviation: "st", fullRegex: true, charLength: { min: 3, max: 24 } }, //st<storage name><###>
-        { assetType: "Storage account (diagnostic logs)", abbreviation: "stdiag", fullRegex: true, charLength: { min: 3, max: 24 } }, //stdiag<first 2 letters of subscription name and number><region><###>
+        { assetType: "Storage account (general use)", abbreviation: "st", nohyphen: true, fullRegex: true, charLength: { min: 3, max: 24 } }, //st<storage name><###>
+        { assetType: "Storage account (diagnostic logs)", abbreviation: "stdiag", nohyphen: true, fullRegex: true, charLength: { min: 3, max: 24 } }, //stdiag<first 2 letters of subscription name and number><region><###>
         { assetType: "Azure Container Registry", abbreviation: "cr" }, //cr<app name><environment><###>
         { assetType: "Azure StorSimple", abbreviation: "ssimp" } //ssimp<app name>-<environment>
     ],

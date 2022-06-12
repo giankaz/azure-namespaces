@@ -32,7 +32,7 @@ export default function FilterList({setFilteredData, filteredData, setForceAside
 			<FilterLi setFilteredData={setFilteredData} filteredData={filteredData} type={containers} setForceAside={setForceAside}>Containers</FilterLi>
 			<FilterLi setFilteredData={setFilteredData} filteredData={filteredData} type={databases} setForceAside={setForceAside}>Databases</FilterLi>
 			<FilterLi setFilteredData={setFilteredData} filteredData={filteredData} type={storage} setForceAside={setForceAside}>Storage</FilterLi>
-			<FilterLi setFilteredData={setFilteredData} filteredData={filteredData} type={aiAndMachineLearning} setForceAside={setForceAside}>Ai and Machine Learning</FilterLi>
+			<FilterLi setFilteredData={setFilteredData} filteredData={filteredData} type={aiAndMachineLearning} setForceAside={setForceAside}>AI and Machine Learning</FilterLi>
 			<FilterLi setFilteredData={setFilteredData} filteredData={filteredData} type={analyticsAndIoT} setForceAside={setForceAside}>Analytics and IoT</FilterLi>
 			<FilterLi setFilteredData={setFilteredData} filteredData={filteredData} type={azureVirtualDesktop} setForceAside={setForceAside}>Azure Virtual Desktop</FilterLi>
 			<FilterLi setFilteredData={setFilteredData} filteredData={filteredData} type={devTools} setForceAside={setForceAside}>Developer Tools</FilterLi>
