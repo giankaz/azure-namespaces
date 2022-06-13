@@ -8,15 +8,17 @@ export default function mountName(
 	snackbar
 ) {
 	const newGeneratedName = data.nohyphen
-		? `${data.abbreviation.toLowerCase()}${name.toLowerCase()}${enviroment}${region}${
-				instance ? instance : ""
-		  }`
-		: `${data.abbreviation.toLowerCase()}-${name.toLowerCase()}-${enviroment}-${region}-${
-				instance ? instance : ""
-		  }`;
+
+		? `${data.abbreviation.toLowerCase()}${name.toLowerCase()}${
+				enviroment ? enviroment : ""
+		  }${region ? region : ""}${instance ? instance : ""}`
+
+		: `${data.abbreviation.toLowerCase()}-${name.toLowerCase()}${
+				enviroment  ? '-' + enviroment : ""
+		  }${region ? '-' + region  : ""}${instance ? '-' + instance : ""}`;
 
 	if (data.charLength) {
-	    if (newGeneratedName.length < data.charLength.min) {
+		if (newGeneratedName.length < data.charLength.min) {
 			snackbar(
 				`The length of the generated needs to reach the minimum of ${data.charLength.min}`,
 				{
@@ -39,7 +41,7 @@ export default function mountName(
 			});
 		}
 	} else {
-		 if (newGeneratedName.length < 3) {
+		if (newGeneratedName.length < 3) {
 			snackbar(
 				`The length of the generated needs to reach the minimum of ${data.charLength.min}`,
 				{
@@ -63,7 +65,6 @@ export default function mountName(
 		}
 	}
 }
-
 
 /* if (newGeneratedName.length > data.charLength.max) {
 	snackbar(

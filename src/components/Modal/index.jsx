@@ -32,9 +32,90 @@ const style = {
 	borderRadius: "8px",
 	gap: "15px",
 };
-export const noInstance = ["stdiag", "apim", "mg", "rt", "cn", "ntf", "ntfns", "vmss", "cosmos", "redis", "sql", "sqldb", "syn", "mysql", "psql", "ssimp", "srch", "cog", "mlw", "asa", "adf", "dls", "dla", "evh", "hadoop", "hbase", "spark", "iot", "pbi", "sb", "sbq", "sbt", "sbq", "sbt"];
-export const noRegion = ["st", "apim", "mg", "lb", "nsg", "rt", "ntf", "ntfns", "cosmos", "redis", "sql", "sqldb", "syn", "mysql", "psql", "cr", "ssimp", "srch", "cog", "mlw", "asa", "adf", "dls", "dla", "evh", "hadoop", "hbase", "spark", "iot", "pbi", "sb", "sbq", "sbt"];
-export const noEnv = ["st", "apim", "lgw", "nsg", "rt", "vnet", "snet", "vgw", "sbq", "sbt"];
+export const noInstance = [
+	"stdiag",
+	"apim",
+	"mg",
+	"rt",
+	"cn",
+	"ntf",
+	"ntfns",
+	"vmss",
+	"cosmos",
+	"redis",
+	"sql",
+	"sqldb",
+	"syn",
+	"mysql",
+	"psql",
+	"ssimp",
+	"srch",
+	"cog",
+	"mlw",
+	"asa",
+	"adf",
+	"dls",
+	"dla",
+	"evh",
+	"hadoop",
+	"hbase",
+	"spark",
+	"iot",
+	"pbi",
+	"sb",
+	"sbq",
+	"sbt",
+	"sbq",
+	"sbt",
+];
+export const noRegion = [
+	"st",
+	"apim",
+	"vm",
+	"mg",
+	"lb",
+	"nsg",
+	"rt",
+	"ntf",
+	"ntfns",
+	"cosmos",
+	"redis",
+	"sql",
+	"sqldb",
+	"syn",
+	"mysql",
+	"psql",
+	"cr",
+	"ssimp",
+	"srch",
+	"cog",
+	"mlw",
+	"asa",
+	"adf",
+	"dls",
+	"dla",
+	"evh",
+	"hadoop",
+	"hbase",
+	"spark",
+	"iot",
+	"pbi",
+	"sb",
+	"sbq",
+	"sbt",
+];
+export const noEnv = [
+	"st",
+	"apim",
+	"lgw",
+	"nsg",
+	"rt",
+	"vnet",
+	"snet",
+	"vgw",
+	"sbq",
+	"sbt",
+];
 
 export default function GeneratorModal() {
 	const { isOpen, openModal, closeModal, modalData } = useModal();
@@ -44,11 +125,12 @@ export default function GeneratorModal() {
 	const [name, setName] = useState("");
 
 	const [enviroment, setEnviroment] = useState("");
+	const [showEnviroment, setShowEnviroment] = useState(true);
 
 	const [region, setRegion] = useState("");
+	const [showRegion, setShowRegion] = useState(true);
 
 	const [instance, setInstance] = useState("");
-
 	const [showInstance, setShowInstance] = useState(true);
 
 	const { enqueueSnackbar } = useSnackbar();
@@ -77,15 +159,23 @@ export default function GeneratorModal() {
 		}
 	}
 
-	const regionSchema = showInstance
+	const instanceSchema = showInstance
 		? yup.string().required("Select your instance")
+		: yup.string();
+
+	const enviromentSchema = showEnviroment
+		? yup.string().required("Select your environment")
+		: yup.string();
+
+	const regionSchema = showRegion
+		? yup.string().required("Type or select your region")
 		: yup.string();
 
 	const schema = yup.object().shape({
 		name: yup.string().required("Type your workload/application name."),
-		enviroment: yup.string().required("Select your environment."),
-		region: yup.string().required("Type or select your region."),
-		instance: regionSchema,
+		enviroment: enviromentSchema,
+		region: regionSchema,
+		instance: instanceSchema,
 	});
 
 	const {
@@ -111,28 +201,27 @@ export default function GeneratorModal() {
 	};
 
 	useEffect(() => {
-	
 		for (let key in errors) {
 			enqueueSnackbar(errors[key].message, {
-			  variant: "error",
-			  autoHideDuration: 3000,
-			  anchorOrigin: {
-				vertical: 'bottom',
-				horizontal: 'center',
-			}
-		  })
+				variant: "error",
+				autoHideDuration: 3000,
+				anchorOrigin: {
+					vertical: "bottom",
+					horizontal: "center",
+				},
+			});
 		}
 	}, [errors]);
 
 	useEffect(() => {
-		setValue('name', '')
-		setValue('enviroment', '')
-		setValue('instance', '')
+		setValue("name", "");
+		setValue("enviroment", "");
+		setValue("instance", "");
 
-		setName('')
-		setEnviroment('')
-		setInstance('')
-		setGeneratedName("Generated Namespace")
+		setName("");
+		setEnviroment("");
+		setInstance("");
+		setGeneratedName("Generated Namespace");
 
 		const checkInstaceIsNeeded = noInstance.find(
 			(item) => item === modalData.abbreviation
@@ -147,7 +236,7 @@ export default function GeneratorModal() {
 		);
 
 		if (checkRegionIsNeeded) {
-			setShowInstance(false);
+			setShowRegion(false);
 		}
 
 		const checkEnvIsNeeded = noEnv.find(
@@ -155,9 +244,14 @@ export default function GeneratorModal() {
 		);
 
 		if (checkEnvIsNeeded) {
-			setShowInstance(false);
+			setShowEnviroment(false);
 		}
 
+		return () => {
+			setShowInstance(true);
+			setShowRegion(true);
+			setShowEnviroment(true);
+		};
 	}, [isOpen]);
 
 	return (
@@ -186,19 +280,21 @@ export default function GeneratorModal() {
 							labelText="Type your app or service name"
 							value={name}
 							onChange={(e) => {
-								setValue("name", e.target.value)
-								setName(e.target.value)
+								setValue("name", e.target.value);
+								setName(e.target.value);
 							}}
 						/>
-						<SelectMUI
-							selectValue="enviroment"
-							value={enviroment}
-							selectChangeFunction={setValue}
-							setter={setEnviroment}
-							options={["dev", "qa", "stag", "prod"]}
-							selectInfo="Select the enviroment"
-						/>
-						<SelectRegion setRegion={setValue} />
+						{showEnviroment && (
+							<SelectMUI
+								selectValue="enviroment"
+								value={enviroment}
+								selectChangeFunction={setValue}
+								setter={setEnviroment}
+								options={["dev", "qa", "stag", "prod"]}
+								selectInfo="Select the enviroment"
+							/>
+						)}
+						{showRegion && <SelectRegion setRegion={setValue} />}
 						{showInstance && (
 							<SelectMUI
 								selectValue="instance"

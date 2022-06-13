@@ -12,7 +12,7 @@ export const StyledInput = styled.input`
     }
 `
 export const StyledDiv = styled.div`
-    width: 94.5%;
+    width: 300px;
     height: 56px;
     border: 1px solid var(--blue);
     border-radius: 6px;
@@ -68,12 +68,13 @@ export const StyledDiv = styled.div`
 }
 `
 
-export const StyledCloseButton = styled.button`
+export const StyledCloseButton = styled.div`
 border: none;
 background-color: transparent;
 font-size: 30px;
 font-weight: bold;
 color: var(--blue);
+font-family: 'rubik', 'sans serif';
 
 position: absolute;
 right: 10px;
