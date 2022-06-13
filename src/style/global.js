@@ -41,6 +41,10 @@ button {
 
 
 
+  .MuiMenu-list {
+  background-color: var(--grey);
+    color: var(--white)
+  }
 
 
 * {

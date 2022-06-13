@@ -1,20 +1,11 @@
-import { makeStyles } from "@material-ui/styles";
+import { Paper } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { useEffect } from "react";
 import regions from "../../regions";
 
-const useStyles = makeStyles({
-	paper: {
-		backgroundColor: "var(--grey)",
-		color: "var(--white)",
-	},
-});
 
 export default function SelectRegion({ region, setRegion }) {
-	const classes = useStyles();
-
 
 	return (
 		<Stack
@@ -25,9 +16,11 @@ export default function SelectRegion({ region, setRegion }) {
 				freeSolo
 				id="free-solo-2-demo"
 				options={regions.map((option) => option.region)}
-				classes={{ paper: classes.paper }}
+				PaperComponent={({ children }) => (
+                    <Paper style={{fontFamily: 'rubik, sans-serif', background: "var(--grey)", color: 'var(--white)', fontWeight: '50' }}>{children}</Paper>
+                  )}
 				onChange={(e, value) => {
-					console.log(e.target.innerText);
+			
 					if (value) {
 						const selectedRegion = regions.find(
 							(item) => item.region.toLowerCase() === value.toLowerCase()

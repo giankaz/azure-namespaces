@@ -1,22 +1,16 @@
+import { Paper } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 import { useFilter } from "../../contexts/Filter";
 import database from "../../db";
-import { makeStyles } from "@material-ui/styles";
 
 
-const useStyles = makeStyles({
-    searchBox: {
-      backgroundColor: 'var(--grey)',
-      color: 'var(--white)'
-    }
-  });
 
 
 export default function SearchBox() {
-	const classes = useStyles()
+
 	const [allData, setAllData] = useState([]);
 
     const {searchValue, setSearchValue} = useFilter()
@@ -37,7 +31,9 @@ export default function SearchBox() {
 			<Autocomplete
 				freeSolo
 				id="free-solo-2-demo"
-                classes={{ paper: classes.searchBox }}
+				PaperComponent={({ children }) => (
+                    <Paper style={{fontFamily: 'rubik, sans-serif', background: "var(--grey)", color: 'var(--white)', fontWeight: '50'}}>{children}</Paper>
+                  )}
 				disableClearable
 				options={allData.map((option) => option.assetType)}
                 onChange={(e, value) => setSearchValue(value)}

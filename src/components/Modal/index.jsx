@@ -183,7 +183,7 @@ export default function GeneratorModal() {
 							value={enviroment}
 							selectChangeFunction={setValue}
 							setter={setEnviroment}
-							options={["dev", "prod", "qa", "stag"]}
+							options={["dev", "qa", "stag", "prod"]}
 							selectInfo="Select the enviroment"
 						/>
 						<SelectRegion setRegion={setValue} />
