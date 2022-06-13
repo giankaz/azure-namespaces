@@ -1,4 +1,4 @@
-import { noInstance } from "../../components/Modal";
+
 
 export default function mountName(
 	data,
@@ -16,12 +16,80 @@ export default function mountName(
 		: `${data.abbreviation.toLowerCase()}-${name.toLowerCase()}-${enviroment}-${region}-${
 				instance ? instance : ""
 		  }`;
-	setGenerated(newGeneratedName);
-	snackbar(`Name ${newGeneratedName} was generated, click on it to copy.`, {
-		variant: "success",
-		anchorOrigin: {
-			vertical: "bottom",
-			horizontal: "center",
-		},
-	});
+
+
+	if (data.charLength) {
+	    if (newGeneratedName.length < data.charLength.min) {
+			snackbar(
+				`The length of the generated needs to reach the minumum of ${data.charLength.min}`,
+				{
+					variant: "error",
+					anchorOrigin: {
+						vertical: "bottom",
+						horizontal: "center",
+					},
+				}
+			);
+		} else {
+			setGenerated(newGeneratedName);
+
+			snackbar(`Name ${newGeneratedName} was generated, click on it to copy.`, {
+				variant: "success",
+				anchorOrigin: {
+					vertical: "bottom",
+					horizontal: "center",
+				},
+			});
+		}
+	} else {
+		 if (newGeneratedName.length < 3) {
+			snackbar(
+				`The length of the generated needs to reach the minumum of ${data.charLength.min}`,
+				{
+					variant: "error",
+					anchorOrigin: {
+						vertical: "bottom",
+						horizontal: "center",
+					},
+				}
+			);
+		} else {
+			setGenerated(newGeneratedName);
+
+			snackbar(`Name ${newGeneratedName} was generated, click on it to copy.`, {
+				variant: "success",
+				anchorOrigin: {
+					vertical: "bottom",
+					horizontal: "center",
+				},
+			});
+		}
+	}
 }
+
+
+/* if (newGeneratedName.length > data.charLength.max) {
+	snackbar(
+		`The length of the generated namespace exceeds the maximum limit of ${data.charLength.max}`,
+		{
+			variant: "error",
+			anchorOrigin: {
+				vertical: "bottom",
+				horizontal: "center",
+			},
+		}
+	);
+} else  */
+/* 
+if (newGeneratedName.length > 32) {
+	snackbar(
+		`The length of the generated namespace exceeds the maximum limit of ${data.charLength.max}`,
+		{
+			variant: "error",
+			anchorOrigin: {
+				vertical: "bottom",
+				horizontal: "center",
+			},
+		}
+	);
+} else */

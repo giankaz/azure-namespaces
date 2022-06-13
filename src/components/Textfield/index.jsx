@@ -4,8 +4,6 @@ import TextField from "@mui/material/TextField";
 
 export default function InputMUI({
 	labelText,
-	min = 1,
-	max = 32,
 	onChange,
 	value,
 	readOnly,
@@ -51,9 +49,7 @@ export default function InputMUI({
 					},
 				}}
 				inputProps={{
-					readOnly: readOnly,
-					maxLength: max,
-					minLength: min,
+					readOnly: readOnly
 				}}
 			/>
 		</Box>
