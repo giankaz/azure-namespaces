@@ -32,7 +32,9 @@ const style = {
 	borderRadius: "8px",
 	gap: "15px",
 };
-export const noInstance = ["st", "stdiag"];
+export const noInstance = ["stdiag", "apim", "mg", "rt", "cn", "ntf", "ntfns", "vmss", "cosmos", "redis", "sql", "sqldb", "syn", "mysql", "psql", "ssimp", "srch", "cog", "mlw", "asa", "adf", "dls", "dla", "evh", "hadoop", "hbase", "spark", "iot", "pbi", "sb", "sbq", "sbt", "sbq", "sbt"];
+export const noRegion = ["st", "apim", "mg", "lb", "nsg", "rt", "ntf", "ntfns", "cosmos", "redis", "sql", "sqldb", "syn", "mysql", "psql", "cr", "ssimp", "srch", "cog", "mlw", "asa", "adf", "dls", "dla", "evh", "hadoop", "hbase", "spark", "iot", "pbi", "sb", "sbq", "sbt"];
+export const noEnv = ["st", "apim", "lgw", "nsg", "rt", "vnet", "snet", "vgw", "sbq", "sbt"];
 
 export default function GeneratorModal() {
 	const { isOpen, openModal, closeModal, modalData } = useModal();
@@ -81,7 +83,7 @@ export default function GeneratorModal() {
 
 	const schema = yup.object().shape({
 		name: yup.string().required("Type your workload/application name."),
-		enviroment: yup.string().required("Select your enviroment."),
+		enviroment: yup.string().required("Select your environment."),
 		region: yup.string().required("Type or select your region."),
 		instance: regionSchema,
 	});
@@ -119,8 +121,6 @@ export default function GeneratorModal() {
 				horizontal: 'center',
 			}
 		  })
-		
-
 		}
 	}, [errors]);
 
@@ -134,7 +134,6 @@ export default function GeneratorModal() {
 		setInstance('')
 		setGeneratedName("Generated Namespace")
 
-
 		const checkInstaceIsNeeded = noInstance.find(
 			(item) => item === modalData.abbreviation
 		);
@@ -143,9 +142,22 @@ export default function GeneratorModal() {
 			setShowInstance(false);
 		}
 
-		return () => {
-			setShowInstance(true);
-		};
+		const checkRegionIsNeeded = noRegion.find(
+			(item) => item === modalData.abbreviation
+		);
+
+		if (checkRegionIsNeeded) {
+			setShowInstance(false);
+		}
+
+		const checkEnvIsNeeded = noEnv.find(
+			(item) => item === modalData.abbreviation
+		);
+
+		if (checkEnvIsNeeded) {
+			setShowInstance(false);
+		}
+
 	}, [isOpen]);
 
 	return (

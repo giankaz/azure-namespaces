@@ -37,9 +37,7 @@ export default function Home() {
   const [forceAside, setForceAside] = useState(false)
 
   const mobile = useMediaQuery('(max-width: 750px)')
-
-
-
+  
 	useEffect(() => {
 		const newData = [];
   

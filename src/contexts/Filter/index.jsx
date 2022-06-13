@@ -12,5 +12,4 @@ export function FilterProvider ({children}) {
     )
 }
 
-
 export const useFilter = () => useContext(FilterContext)

@@ -1,5 +1,3 @@
-
-
 export default function mountName(
 	data,
 	name,
@@ -17,11 +15,10 @@ export default function mountName(
 				instance ? instance : ""
 		  }`;
 
-
 	if (data.charLength) {
 	    if (newGeneratedName.length < data.charLength.min) {
 			snackbar(
-				`The length of the generated needs to reach the minumum of ${data.charLength.min}`,
+				`The length of the generated needs to reach the minimum of ${data.charLength.min}`,
 				{
 					variant: "error",
 					anchorOrigin: {
@@ -44,7 +41,7 @@ export default function mountName(
 	} else {
 		 if (newGeneratedName.length < 3) {
 			snackbar(
-				`The length of the generated needs to reach the minumum of ${data.charLength.min}`,
+				`The length of the generated needs to reach the minimum of ${data.charLength.min}`,
 				{
 					variant: "error",
 					anchorOrigin: {
