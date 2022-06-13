@@ -13,10 +13,7 @@ import ButtonMUI from "../Button";
 import SelectRegion from "../RegionSearcher";
 import SelectMUI from "../Select";
 import InputMUI from "../Textfield";
-import {
-	StyledCloseButton,
-	StyledDiv, StyledInput
-} from "./styles";
+import { StyledCloseButton, StyledDiv, StyledInput } from "./styles";
 
 const style = {
 	position: "absolute",
@@ -35,7 +32,7 @@ const style = {
 	borderRadius: "8px",
 	gap: "15px",
 };
-export const noInstance = ['st', 'stdiag']
+export const noInstance = ["st", "stdiag"];
 
 export default function GeneratorModal() {
 	const { isOpen, openModal, closeModal, modalData } = useModal();
@@ -47,18 +44,12 @@ export default function GeneratorModal() {
 	const [enviroment, setEnviroment] = useState("");
 
 	const [region, setRegion] = useState("");
-    console.log(`🤖 ~ GeneratorModal ~ region`, region)
 
 	const [instance, setInstance] = useState("");
 
-	const [reset, setReset] = useState(false)
-
-	const [showInstance, setShowInstance] = useState(true)
-
-	
+	const [showInstance, setShowInstance] = useState(true);
 
 	const { enqueueSnackbar } = useSnackbar();
-
 
 	function copyToClipboard() {
 		if (generatedName !== "Generated Namespace") {
@@ -84,41 +75,78 @@ export default function GeneratorModal() {
 		}
 	}
 
-	const schema = yup.object().shape({});
+	const regionSchema = showInstance
+		? yup.string().required("Select your instance")
+		: yup.string();
+
+	const schema = yup.object().shape({
+		name: yup.string().required("Type your workload/application name."),
+		enviroment: yup.string().required("Select your enviroment."),
+		region: yup.string().required("Type or select your region."),
+		instance: regionSchema,
+	});
 
 	const {
 		register,
 		handleSubmit,
+		setValue,
+		getValues,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(schema),
 	});
 
-	const submit = (data) => {
-		console.log(data);
+	const submit = ({ name, enviroment, region, instance }) => {
+		mountName(
+			modalData,
+			name,
+			region,
+			enviroment,
+			instance,
+			setGeneratedName,
+			enqueueSnackbar
+		);
 	};
 
 	useEffect(() => {
-		setRegion("")
-		setGeneratedName("Generated Namespace");
-		setName("");
-		setEnviroment("");
-		setInstance("");
-		setReset(true)
-		const checkInstaceIsNeeded = noInstance.find((item) => item === modalData.abbreviation)
-        
+	
+		for (let key in errors) {
+			enqueueSnackbar(errors[key].message, {
+			  variant: "error",
+			  autoHideDuration: 3000,
+			  anchorOrigin: {
+				vertical: 'bottom',
+				horizontal: 'center',
+			}
+		  })
+		
+
+		}
+	}, [errors]);
+
+	useEffect(() => {
+		setValue('name', '')
+		setValue('enviroment', '')
+		setValue('instance', '')
+
+		setName('')
+		setEnviroment('')
+		setInstance('')
+		setGeneratedName("Generated Namespace")
+
+
+		const checkInstaceIsNeeded = noInstance.find(
+			(item) => item === modalData.abbreviation
+		);
+
 		if (checkInstaceIsNeeded) {
-			setShowInstance(false)
+			setShowInstance(false);
 		}
-	
+
 		return () => {
-			setReset(false)
-			setShowInstance(true)
-		}
-	
+			setShowInstance(true);
+		};
 	}, [isOpen]);
-
-
 
 	return (
 		<div>
@@ -129,77 +157,70 @@ export default function GeneratorModal() {
 				aria-labelledby="keep-mounted-modal-title"
 				aria-describedby="keep-mounted-modal-description"
 			>
-				<Box sx={style}>
-					<StyledCloseButton onClick={closeModal}>x</StyledCloseButton>
-					<Typography
-						sx={{
-							color: "white",
-							fontSize: "20px",
-							maxWidth: "100%",
-							marginBottom: "15px",
-						}}
-					>
-						{modalData.assetType}
-					</Typography>
-					<InputMUI
-						required
-						labelText="Type your app or service name"
-						onChange={(e) => setName(e.target.value)}
-						value={name}
-						min={modalData.charLength ? modalData.charLength.min : undefined}
-						max={modalData.charLength ? modalData.charLength.max : undefined}
-					/>
-					<SelectMUI
-						selectValue={enviroment}
-						selectChangeFunction={setEnviroment}
-						options={["dev", "prod", "qa", "stag"]}
-						selectInfo="Select the enviroment"
-					/>
-					{reset && <SelectRegion region={region} setRegion={setRegion} />}
-					{showInstance && 
-					<SelectMUI
-					selectValue={instance}
-					selectChangeFunction={setInstance}
-					options={[
-						"001",
-						"002",
-						"003",
-						"004",
-						"005",
-						"006",
-						"007",
-						"008",
-						"009",
-						"010"
-					]}
-					selectInfo="Select your instance"
-				/>}
-					<StyledDiv onClick={copyToClipboard}>
-						<StyledInput
-							readOnly
-							placeholder={generatedName}
-							value={generatedName}
-							onChange={(e) => setGeneratedName(e.target.value)}
+				<form onSubmit={handleSubmit(submit)}>
+					<Box sx={style}>
+						<StyledCloseButton onClick={closeModal}>x</StyledCloseButton>
+						<Typography
+							sx={{
+								color: "white",
+								fontSize: "20px",
+								maxWidth: "100%",
+								marginBottom: "15px",
+							}}
+						>
+							{modalData.assetType}
+						</Typography>
+						<InputMUI
+							labelText="Type your app or service name"
+							value={name}
+							onChange={(e) => {
+								setValue("name", e.target.value)
+								setName(e.target.value)
+							}}
 						/>
-						<BiCopyAlt size={30} className="copybtn" />
-						<p className="tooltiptext">Copy to clipboard</p>
-					</StyledDiv>
-					<ButtonMUI
-						onClick={() =>
-							mountName(
-								modalData,
-								name,
-								region,
-								enviroment,
-								instance,
-								setGeneratedName,
-								enqueueSnackbar
-							)
-						}
-					>
-						Generate Azure Namespace
-					</ButtonMUI>
-				</Box>
+						<SelectMUI
+							selectValue="enviroment"
+							value={enviroment}
+							selectChangeFunction={setValue}
+							setter={setEnviroment}
+							options={["dev", "prod", "qa", "stag"]}
+							selectInfo="Select the enviroment"
+						/>
+						<SelectRegion setRegion={setValue} />
+						{showInstance && (
+							<SelectMUI
+								selectValue="instance"
+								value={instance}
+								setter={setInstance}
+								selectChangeFunction={setValue}
+								options={[
+									"001",
+									"002",
+									"003",
+									"004",
+									"005",
+									"006",
+									"007",
+									"008",
+									"009",
+									"010",
+								]}
+								selectInfo="Select your instance"
+							/>
+						)}
+						<StyledDiv onClick={copyToClipboard}>
+							<StyledInput
+								readOnly
+								placeholder={generatedName}
+								value={generatedName}
+								onChange={(e) => setGeneratedName(e.target.value)}
+							/>
+							<BiCopyAlt size={30} className="copybtn" />
+							<p className="tooltiptext">Copy to clipboard</p>
+						</StyledDiv>
+						<ButtonMUI type="submit">Generate Azure Namespace</ButtonMUI>
+					</Box>
+				</form>
 			</Modal>
 		</div>
 	);

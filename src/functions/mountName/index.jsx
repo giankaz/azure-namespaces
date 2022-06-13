@@ -10,8 +10,12 @@ export default function mountName(
 	snackbar
 ) {
 	const newGeneratedName = data.nohyphen
-		? `${data.abbreviation.toLowerCase()}${name.toLowerCase()}${enviroment}${region}${instance}`
-		: `${data.abbreviation.toLowerCase()}-${name.toLowerCase()}-${enviroment}-${region}-${instance}`;
+		? `${data.abbreviation.toLowerCase()}${name.toLowerCase()}${enviroment}${region}${
+				instance ? instance : ""
+		  }`
+		: `${data.abbreviation.toLowerCase()}-${name.toLowerCase()}-${enviroment}-${region}-${
+				instance ? instance : ""
+		  }`;
 	setGenerated(newGeneratedName);
 	snackbar(`Name ${newGeneratedName} was generated, click on it to copy.`, {
 		variant: "success",

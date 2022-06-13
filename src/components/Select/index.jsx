@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     }
   });
 
-export default function SelectMUI({selectValue, selectChangeFunction, options, selectInfo}) {
+export default function SelectMUI({selectValue, selectChangeFunction, options, selectInfo, value, setter}) {
   const classes = useStyles()
 
   return (
@@ -23,10 +23,13 @@ export default function SelectMUI({selectValue, selectChangeFunction, options, s
           labelId="demo-simple-select-label"
           sx={{border: '1px solid var(--blue)', color: 'var(--white)'}}
           id="demo-simple-select"
-          value={selectValue}
           label={selectInfo}
+          value={value}
           MenuProps={{classes: {paper: classes.dropdownStyle}}}
-          onChange={(e) => selectChangeFunction(e.target.value)}
+          onChange={(e) => {
+            selectChangeFunction(selectValue, e.target.value)
+            setter(e.target.value)
+          }}
        >
          {options.map((option, index) => <MenuItem key={index} value={option}>{option}</MenuItem>)}
         </Select>
