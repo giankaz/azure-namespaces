@@ -14,6 +14,9 @@ import SelectRegion from "../RegionSearcher";
 import SelectMUI from "../Select";
 import InputMUI from "../Textfield";
 import { StyledCloseButton, StyledDiv, StyledInput } from "./styles";
+import noInstance from "../../databases/noInstances";
+import noRegion from "../../databases/noRegion";
+import noEnv from "../../databases/noEnv";
 
 const style = {
 	position: "absolute",
@@ -30,92 +33,10 @@ const style = {
 	alignItems: "center",
 	justifyContent: "center",
 	borderRadius: "8px",
-	gap: "15px",
+	gap: "20px",
 };
-export const noInstance = [
-	"stdiag",
-	"apim",
-	"mg",
-	"rt",
-	"cn",
-	"ntf",
-	"ntfns",
-	"vmss",
-	"cosmos",
-	"redis",
-	"sql",
-	"sqldb",
-	"syn",
-	"mysql",
-	"psql",
-	"ssimp",
-	"srch",
-	"cog",
-	"mlw",
-	"asa",
-	"adf",
-	"dls",
-	"dla",
-	"evh",
-	"hadoop",
-	"hbase",
-	"spark",
-	"iot",
-	"pbi",
-	"sb",
-	"sbq",
-	"sbt",
-	"sbq",
-	"sbt",
-];
-export const noRegion = [
-	"st",
-	"apim",
-	"vm",
-	"mg",
-	"lb",
-	"nsg",
-	"rt",
-	"ntf",
-	"ntfns",
-	"cosmos",
-	"redis",
-	"sql",
-	"sqldb",
-	"syn",
-	"mysql",
-	"psql",
-	"cr",
-	"ssimp",
-	"srch",
-	"cog",
-	"mlw",
-	"asa",
-	"adf",
-	"dls",
-	"dla",
-	"evh",
-	"hadoop",
-	"hbase",
-	"spark",
-	"iot",
-	"pbi",
-	"sb",
-	"sbq",
-	"sbt",
-];
-export const noEnv = [
-	"st",
-	"apim",
-	"lgw",
-	"nsg",
-	"rt",
-	"vnet",
-	"snet",
-	"vgw",
-	"sbq",
-	"sbt",
-];
+
+
 
 export default function GeneratorModal() {
 	const { isOpen, openModal, closeModal, modalData } = useModal();

@@ -2,7 +2,7 @@ import { Paper } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import regions from "../../regions";
+import regions from "../../databases/regions";
 
 
 export default function SelectRegion({ region, setRegion }) {

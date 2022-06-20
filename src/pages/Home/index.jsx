@@ -5,7 +5,7 @@ import CardList from "../../components/CardList";
 import GeneratorModal from "../../components/Modal";
 import SearchBox from "../../components/Search";
 import { useFilter } from "../../contexts/Filter";
-import database from "../../db";
+import database from "../../databases/db";
 import { StyledMain } from "./styles";
 import {GiHamburgerMenu} from 'react-icons/gi'
 export default function Home() {

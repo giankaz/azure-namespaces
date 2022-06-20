@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import database from "../../db";
+import database from "../../databases/db";
 
 export const DatabaseContext = createContext();
 
